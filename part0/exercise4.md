@@ -27,7 +27,7 @@ sequenceDiagram
 
     Note right of browser: The browser executes the callback function that renders the notes
 
-    Note right of browser: The user types and press save
+    Note right of browser: The user types and press save, the browser then sends the user input to the server
 
     browser->>server: POST https://studies.cs.helsinki.fi/exampleapp/new_note
     activate server
