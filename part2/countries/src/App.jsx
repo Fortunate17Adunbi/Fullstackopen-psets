@@ -58,6 +58,7 @@ const App = () => {
   })
 
   useEffect(() => {
+    // console.log('has changed')
     if (filter.country.length === 1) {
       const country = filter.country[0]
       if (country.weather) return
@@ -78,6 +79,7 @@ const App = () => {
     const value = event.target.value
     console.log('prompt ', value)
     setNewCountry(value)
+    // console.log('continue')
     countriesService.getCountry()
       .then(response => {
         const filtered = response.filter(country => {
