@@ -60,13 +60,12 @@ const App = () => {
 
   const loginForm = () => {
     return (
-      <Togglable buttonLabel='login'>
-        <LoginForm handleLogin={handleLogin} />
-      </Togglable>
+      <LoginForm handleLogin={handleLogin} />
     )
   }
 
-  const removeBlog = async (blog) => {      
+  const removeBlog = async (blog) => {
+    console.log('removing blog ', blog)
     if (window.confirm(`remove blog ${blog.title} by ${blog.author}`)){
       try {
         await blogService.remove(blog.id)
@@ -162,15 +161,24 @@ const App = () => {
   console.log('sorted blog ', sortedBlog)
   return (
     <div>
-      <Notification message={message} />
+      <Notification message={message} data-testid='notification' />
       {!user && loginForm()}
       {user && (
         <div>
           <h2>blogs</h2>
           <p>{user.name} is logged in <button onClick={logOut}>log out</button> </p>
           {blogForm()}
-          {sortedBlog.map(blog =>
-            <Blog key={blog.id} blog={blog} updateLike={updateLike} deleteBlog={removeBlog} />
+          {sortedBlog.map(blog =>{
+            // console.log('blog ', blog)
+            // console.log('user ', user)
+            // console.log('blog.user.id ', blog.user.id)
+            // console.log('user.id ', user.id)
+            const isCreator = blog.user?.username === user.username
+            console.log('is creator ', isCreator)
+            return <Blog key={blog.id} blog={blog} updateLike={updateLike} deleteBlog={removeBlog} isCreator={isCreator} />
+          }
+
+            
           )}
         </div>
       )}

@@ -9,13 +9,16 @@ const usersRouter = require('./controllers/users')
 
 const app = express()
 
-logger.info('connecting to db')
+console.log('connecting to db')
+// logger.info('connecting to db')
 mongoose.set('strictQuery',false)
 mongoose.connect(config.MONGODB_URI, { bufferTimeoutMS: 90000 })
   .then(() => {
-    logger.info('Connected to mongoDb')
+    console.log('Connected to mongoDb')
+    // logger.info('Connected to mongoDb')
   }).catch(error => {
-    logger.error('Error connecting to DB: ', error.message)
+    console.log('Error connecting to DB: ', error.message)
+    // logger.error('Error connecting to DB: ', error.message)
   })
 
 app.use(express.json())
@@ -26,6 +29,11 @@ app.use(middleware.tokenExtractor)
 app.use('/api/login', loginRouter)
 app.use('/api/blogs',blogsRouter)
 app.use('/api/users', usersRouter)
+
+if (process.env.NODE_ENV === 'test') {
+  const testingRouter = require('./controllers/testing')
+  app.use('/api/testing', testingRouter)
+}
 
 app.use(middleware.errorHandler)
 

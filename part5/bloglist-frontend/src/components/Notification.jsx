@@ -2,10 +2,10 @@ const Notification =  ({ message }) => {
   return (
     <>
       {message.success && (
-        <div className='success'>{message.success}</div>
+        <div className='success' data-testid='notification'>{message.success}</div>
       )}
       {message.error && (
-        <div className='error'>{message.error}</div>
+        <div className='error' data-testid='notification'>{message.error}</div>
       )}
     </>
   )

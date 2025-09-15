@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-const Blog = ({ blog, updateLike, deleteBlog }) => {
+const Blog = ({ blog, updateLike, deleteBlog, isCreator }) => {
   const [isShown, setIsShown] = useState(false)
 
   const blogStyle = {
@@ -10,19 +10,18 @@ const Blog = ({ blog, updateLike, deleteBlog }) => {
     borderWidth: 1,
     marginBottom: 5
   }
-
   const buttonLabel = isShown ? 'hide' : 'show'
   const detialsStyle = { display: isShown ? '' : 'none' }
 
   return (
-  <div style={blogStyle}>
+  <div style={blogStyle} className='blog'>
     <p>{blog.title} {blog.author} <button onClick={() => setIsShown(!isShown)}>{buttonLabel}</button></p>
     
     <div style={detialsStyle} id='blog-details'>
       <p>{blog.url}</p>
       <p>Likes {blog.likes} <button onClick={() => updateLike(blog)}>like</button></p>
       <p>{blog.author}</p>
-      <button onClick={() => deleteBlog(blog)}>delete</button>
+      {isCreator && (<button onClick={() => deleteBlog(blog)}>delete</button>)}
     </div>
   </div>
   )  
