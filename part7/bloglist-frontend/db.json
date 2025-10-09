@@ -1,0 +1,75 @@
+{
+  "blogs": [
+    {
+      "id": "1",
+      "url": "/blog/how-context-works-in-react",
+      "title": "How Context Works in React",
+      "author": "Liam Carter",
+      "likes": 64
+    },
+    {
+      "id": "2",
+      "url": "/blog/building-a-blockchain-protocol",
+      "title": "Building a Blockchain Protocol from Scratch",
+      "author": "Ava Mitchell",
+      "likes": 102
+    },
+    {
+      "id": "3",
+      "url": "/blog/understanding-tanstack-query-states",
+      "title": "Understanding TanStack Query States",
+      "author": "Noah Rodriguez",
+      "likes": 48
+    },
+    {
+      "id": "4",
+      "url": "/blog/solana-vs-ethereum-for-devs",
+      "title": "Solana vs Ethereum: Developer Perspective",
+      "author": "Sophia Bennett",
+      "likes": 76
+    },
+    {
+      "id": "5",
+      "url": "/blog/building-onchain-analysis-api",
+      "title": "Building an On-Chain Analysis API on Solana",
+      "author": "Ethan Brooks",
+      "likes": 90
+    },
+    {
+      "id": "6",
+      "url": "/blog/getting-started-with-react-hooks",
+      "title": "Getting Started with React Hooks",
+      "author": "Mia Patel",
+      "likes": 58
+    },
+    {
+      "id": "7",
+      "url": "/blog/solana-wallet-security-basics",
+      "title": "Solana Wallet Security Basics",
+      "author": "Lucas Nguyen",
+      "likes": 82
+    },
+    {
+      "id": "8",
+      "url": "/blog/optimizing-redux-slices",
+      "title": "Optimizing Redux Slices for Better Performance",
+      "author": "Isabella Turner",
+      "likes": 67
+    },
+    {
+      "id": "9",
+      "url": "/blog/using-express-with-react-query",
+      "title": "Using Express with React Query",
+      "author": "Oliver Scott",
+      "likes": 73
+    },
+    {
+      "user": "",
+      "likes": 124,
+      "author": "Amelia Johnson",
+      "title": "Creating a Memecoin Tracking API on Solana",
+      "url": "/blog/creating-memecoin-tracking-api",
+      "id": "10"
+    }
+  ]
+}
