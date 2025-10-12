@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Button, Form } from "react-bootstrap";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import blogService from "../services/blogs";
 import { useMessage } from "../context/useMessage";
@@ -35,49 +36,46 @@ const BlogForm = ({ blogFormRef }) => {
 
   return (
     <>
-      <h2>create new</h2>
-      <form onSubmit={addBlog}>
-        <div>
-          <label>
-            title
-            <input
-              type="text"
-              value={blogField.title}
-              placeholder="enter title"
-              onChange={({ target }) =>
-                setBlogField((late) => ({ ...late, title: target.value }))
-              }
-            />
-          </label>
-        </div>
-        <div>
-          <label>
-            author
-            <input
-              type="text"
-              value={blogField.author}
-              placeholder="enter author"
-              onChange={({ target }) =>
-                setBlogField((late) => ({ ...late, author: target.value }))
-              }
-            />
-          </label>
-        </div>
-        <div>
-          <label>
-            url
-            <input
-              type="text"
-              value={blogField.url}
-              placeholder="enter url"
-              onChange={({ target }) =>
-                setBlogField((late) => ({ ...late, url: target.value }))
-              }
-            />
-          </label>
-        </div>
-        <button type="submit">create</button>
-      </form>
+      <h4>create new</h4>
+      <Form onSubmit={addBlog}>
+        <Form.Group>
+          <Form.Label>title</Form.Label>
+          <Form.Control
+            type="text"
+            value={blogField.title}
+            placeholder="Enter blog's title"
+            onChange={({ target }) =>
+              setBlogField((late) => ({ ...late, title: target.value }))
+            }
+          />
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>author</Form.Label>
+          <Form.Control
+            type="text"
+            value={blogField.author}
+            placeholder="Enter blog's author"
+            onChange={({ target }) =>
+              setBlogField((late) => ({ ...late, author: target.value }))
+            }
+          />
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>url</Form.Label>
+
+          <Form.Control
+            type="text"
+            value={blogField.url}
+            placeholder="enter url"
+            onChange={({ target }) =>
+              setBlogField((late) => ({ ...late, url: target.value }))
+            }
+          />
+        </Form.Group>
+        <Button type="submit" variant="outline-success">
+          create
+        </Button>
+      </Form>
     </>
   );
 };

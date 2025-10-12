@@ -26,7 +26,7 @@ const update = async (id, newObject) => {
     headers: { Authorization: token },
   };
   console.log("route to be update ", newObject);
-  const response = await axios.put(`${baseUrl}/${id}`, newObject, config);
+  const response = await axios.put(`${baseUrl}/${id}/like`, newObject, config);
   console.log("route ", response);
   return response.data;
 };
@@ -41,4 +41,17 @@ const remove = async (id) => {
   return response.data;
 };
 
-export default { getAll, create, setToken, update, remove };
+const comment = async (id, contentObj) => {
+  const config = {
+    headers: { Authorization: token },
+  };
+
+  const response = await axios.post(
+    `${baseUrl}/${id}/comments`,
+    contentObj,
+    config
+  );
+  return response.data;
+};
+
+export default { getAll, create, setToken, update, remove, comment };

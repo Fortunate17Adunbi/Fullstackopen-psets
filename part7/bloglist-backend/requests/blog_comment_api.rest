@@ -1,0 +1,7 @@
+POST http://localhost:3003/api/blogs/68e55817b9dc20c5010b8451/comments
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4YjZmZTgwMzQ5ZGQ1N2VkZGFiOTE5ZSIsInVzZXJuYW1lIjoicm9vdCIsImlhdCI6MTc2MDE2MDgxOCwiZXhwIjoxNzYwMTY0NDE4fQ.u-if_UZIF8C8dJgOStEHQMEeE8i5YrjbXRGn3Z1v9LA
+
+{
+  "content": "so real"
+}

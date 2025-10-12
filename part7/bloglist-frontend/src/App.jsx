@@ -17,7 +17,7 @@ const App = () => {
   console.log("how many");
 
   return (
-    <div>
+    <div className="container">
       <Notification data-testid="notification" />
       {!user && <LoginForm />}
       {user && <Blogs />}

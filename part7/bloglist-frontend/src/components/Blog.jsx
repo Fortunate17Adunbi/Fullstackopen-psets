@@ -1,13 +1,21 @@
-import { useState } from "react";
+import { startTransition } from "react";
 import { useQueryClient, useMutation } from "@tanstack/react-query";
 import { useMessage } from "../context/useMessage";
+import { useMatch, useNavigate } from "react-router-dom";
+import { Button } from "react-bootstrap";
 
 import blogService from "../services/blogs";
+import Comment from "./Comment";
 
-const Blog = ({ blog, isCreator }) => {
-  const [isShown, setIsShown] = useState(false);
+const Blog = () => {
   const queryClient = useQueryClient();
   const message = useMessage();
+  const blogs = queryClient.getQueryData(["blogs"]);
+  const navigate = useNavigate();
+  const match = useMatch("/blogs/:id");
+  const [blog] = match
+    ? blogs.filter((blog) => blog.id === match.params.id)
+    : [];
 
   const deleteBlogMutation = useMutation({
     mutationFn: blogService.remove,
@@ -15,7 +23,10 @@ const Blog = ({ blog, isCreator }) => {
       queryClient.setQueryData(["blogs"], (prevBlog) =>
         prevBlog.filter((b) => b.id !== deleteBlogId)
       );
-      message.success(`deleted blog`);
+      startTransition(() => {
+        navigate("/");
+        message.success(`deleted blog`);
+      });
     },
     onError: (error) => {
       message.error(error.response.data.error);
@@ -36,6 +47,19 @@ const Blog = ({ blog, isCreator }) => {
       message.error(error.response.data.error);
     },
   });
+  const commentMutation = useMutation({
+    mutationFn: ({ id, contentObj }) => blogService.comment(id, contentObj),
+    onSuccess: (returnedBlog) => {
+      console.log("returned Blog", returnedBlog);
+      queryClient.setQueryData(["blogs"], (prevBlog) =>
+        prevBlog.map((b) => (b.id === returnedBlog.id ? returnedBlog : b))
+      );
+      message.success(`added comment to ${returnedBlog.author}'s blog`);
+    },
+    onError: (error) => {
+      message.error(error.response?.data.error);
+    },
+  });
 
   const deleteBlog = (blog) => {
     if (window.confirm(`remove blog ${blog.title} by ${blog.author}`)) {
@@ -43,40 +67,47 @@ const Blog = ({ blog, isCreator }) => {
     }
   };
   const updateLike = (blog) => {
+    console.log("blog in update oo", blog);
     const toBeUpdated = {
       ...blog,
       user: blog.user?.id ?? "",
       likes: blog.likes + 1,
+      comments: blog.comments?.map((c) => c.id),
     };
+    console.log("tobe up in update oo", toBeUpdated);
     likeBlogMutation.mutate({ id: blog.id, toBeUpdated });
   };
-
-  const blogStyle = {
-    paddingTop: 10,
-    paddingLeft: 2,
-    border: "solid",
-    borderWidth: 1,
-    marginBottom: 5,
+  const handleComment = (id, contentObj) => {
+    commentMutation.mutate({ id, contentObj });
   };
-  const buttonLabel = isShown ? "hide" : "show";
-  const detialsStyle = { display: isShown ? "" : "none" };
+
+  console.log("blog ", blog);
+
+  if (!blog) {
+    return <div>blog does not exist</div>;
+  }
 
   return (
-    <div style={blogStyle} className="blog">
-      <p>
-        {blog.title} {blog.author}{" "}
-        <button onClick={() => setIsShown(!isShown)}>{buttonLabel}</button>
-      </p>
+    <div className="blog">
+      <h3>
+        {blog.title} {blog.author}
+      </h3>
 
-      <div style={detialsStyle} id="blog-details">
-        <p>{blog.url}</p>
-        <p>
-          Likes {blog.likes}{" "}
-          <button onClick={() => updateLike(blog)}>like</button>
-        </p>
-        <p>{blog.author}</p>
-        {isCreator && <button onClick={() => deleteBlog(blog)}>delete</button>}
-      </div>
+      <p>
+        <a href={blog.url}>{blog.url}</a>
+      </p>
+      <p>
+        {blog.likes} Likes
+        <Button onClick={() => updateLike(blog)} variant="outline-success">
+          like
+        </Button>
+      </p>
+      <p>added by {blog.user?.name}</p>
+      <Button onClick={() => deleteBlog(blog)} variant="outline-danger">
+        delete
+      </Button>
+
+      <Comment blog={blog} handleComment={handleComment} />
     </div>
   );
 };
