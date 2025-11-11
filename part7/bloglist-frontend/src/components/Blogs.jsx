@@ -87,7 +87,7 @@ const Blogs = () => {
               variant="underline"
             >
               <Nav.Link eventKey="/" as="span">
-                <Link to="/" style={aStyle}>
+                <Link to="/blogs" style={aStyle}>
                   blogs
                 </Link>
               </Nav.Link>
@@ -113,6 +113,7 @@ const Blogs = () => {
 
         <Routes>
           <Route path="/" element={listBlog(sortedBlog)} />
+          <Route path="/blogs" element={listBlog(sortedBlog)} />
           <Route path="/users" element={<Users />} />
           <Route path="/users/:id" element={<User blogs={userBlogs} />} />
           <Route path="/blogs/:id" element={<Blog />} />

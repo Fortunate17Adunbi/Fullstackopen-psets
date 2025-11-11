@@ -6,7 +6,7 @@ const Comment = ({ blog, handleComment }) => {
 
   console.log("comment blog", blog);
   const commentToShow = () => {
-    if (!blog.comments.length) {
+    if (!blog.comments?.length) {
       return <h4>No comment yet...</h4>;
     }
     console.log();

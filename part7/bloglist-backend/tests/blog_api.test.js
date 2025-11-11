@@ -51,6 +51,7 @@ describe('When there is initially blog saved ', () => {
   })
   test('returned blog is formatted', async () => {
     const result = await api.get('/api/blogs')
+    // console.log('result ', result.body)
     const blog = result.body[0]
 
     assert.ok(blog.id)
@@ -220,7 +221,7 @@ describe('When there is initially blog saved ', () => {
     assert(result.body.error.includes('Not the creator of blog'))
 
   })
-  test('a non-existing blog fails', async () => {
+  test('a delete of non-existing blog fails', async () => {
     const blogsAtStart = await helper.blogsInDb()
     const id = await helper.invalidId()
 
@@ -233,7 +234,7 @@ describe('When there is initially blog saved ', () => {
     assert.strictEqual(blogsAtEnd.length, blogsAtStart.length)
     assert(result.body.error.includes('blog not found'))
   })
-  test('a blog can be updated', async () => {
+  test.only('a blog can be liked', async () => {
     const blogsAtStart = await helper.blogsInDb()
     let blogToUpdate = blogsAtStart[1]
 
@@ -241,7 +242,7 @@ describe('When there is initially blog saved ', () => {
     console.log('blog to update ', blogToUpdate)
 
     const result = await api
-      .put(`/api/blogs/${blogToUpdate.id}`)
+      .put(`/api/blogs/${blogToUpdate.id}/like`)
       .set('Authorization', `Bearer ${token}`)
       .send(blogToUpdate)
       .expect(200)
@@ -249,7 +250,7 @@ describe('When there is initially blog saved ', () => {
     console.log('result ', result.body)
     assert.deepStrictEqual(result.body.likes, 1)
   })
-  test('user who is not creator cannot update a blog', async () => {
+  test.only('user who is not creator cannot like a blog', async () => {
     const blogsAtStart = await helper.blogsInDb()
     let blogToUpdate = blogsAtStart[0]
 
@@ -257,7 +258,7 @@ describe('When there is initially blog saved ', () => {
     console.log('blog to update ', blogToUpdate)
 
     const result = await api
-      .put(`/api/blogs/${blogToUpdate.id}`)
+      .put(`/api/blogs/${blogToUpdate.id}/like`)
       .set('Authorization', `Bearer ${token}`)
       .send(blogToUpdate)
       .expect(403)
@@ -265,7 +266,7 @@ describe('When there is initially blog saved ', () => {
     console.log('result ', result.body)
     assert(result.body.error.includes('Not the creator of blog'))
   })
-  test('an unidentified user cannot update blog', async () => {
+  test.only('an unidentified user cannot like blog', async () => {
     const blogsAtStart = await helper.blogsInDb()
     let blogToUpdate = blogsAtStart[1]
 
@@ -273,7 +274,7 @@ describe('When there is initially blog saved ', () => {
     console.log('blog to update ', blogToUpdate)
 
     const result = await api
-      .put(`/api/blogs/${blogToUpdate.id}`)
+      .put(`/api/blogs/${blogToUpdate.id}/like`)
       .send(blogToUpdate)
       .expect(401)
 

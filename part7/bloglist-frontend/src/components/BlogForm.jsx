@@ -66,7 +66,7 @@ const BlogForm = ({ blogFormRef }) => {
           <Form.Control
             type="text"
             value={blogField.url}
-            placeholder="enter url"
+            placeholder="Enter blog's url"
             onChange={({ target }) =>
               setBlogField((late) => ({ ...late, url: target.value }))
             }

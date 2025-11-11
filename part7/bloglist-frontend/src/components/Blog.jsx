@@ -44,7 +44,8 @@ const Blog = () => {
     },
     onError: (error) => {
       console.log("error", error);
-      message.error(error.response.data.error);
+      // console.log("error dsa", error.response.data);
+      message.error(error.response.data.error || error.response.data);
     },
   });
   const commentMutation = useMutation({
