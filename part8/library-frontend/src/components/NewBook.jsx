@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useMutation } from "@apollo/client/react";
 import { ADD_BOOK, ALL_BOOKS, ALL_AUTHORS } from "../queries";
+import { useNavigate } from "react-router-dom";
 
 const NewBook = () => {
   const [title, setTitle] = useState("");
@@ -8,16 +9,21 @@ const NewBook = () => {
   const [published, setPublished] = useState("");
   const [genre, setGenre] = useState("");
   const [genres, setGenres] = useState([]);
+  const navigate = useNavigate;
 
   const [createBook] = useMutation(ADD_BOOK, {
     refetchQueries: [{ query: ALL_BOOKS }, { query: ALL_AUTHORS }],
+    onError: (error) => {
+      console.log("login error ", error.errors);
+      setError(error.errors[0].message);
+    },
+    onCompleted: () => navigate("/authors"),
   });
 
   const submit = async (event) => {
     event.preventDefault();
-    console.log("published: ", typeof pu);
     createBook({ variables: { title, author, published, genres } });
-    console.log("add book...");
+    console.log("adding book...");
 
     setTitle("");
     setPublished("");

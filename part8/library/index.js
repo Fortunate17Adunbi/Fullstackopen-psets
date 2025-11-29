@@ -165,6 +165,7 @@ const resolvers = {
     bookCount: async () => Book.collection.countDocuments(),
     authorCount: async () => Author.collection.countDocuments(),
     allBooks: async (root, args) => {
+      // console.log("looking for book");
       if (args.author) {
         const author = await Author.findOne({ name: args.author });
         if (!author) return [];
