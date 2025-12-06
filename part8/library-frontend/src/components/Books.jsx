@@ -7,7 +7,6 @@ const Books = () => {
   const [genreToShow, setGenreToShow] = useState(null);
   const filtered = useQuery(FIND_BOOK, {
     variables: { genre: genreToShow },
-    fetchPolicy: "cache-and-network",
   });
 
   const genres = [
